@@ -1,0 +1,84 @@
+Javascript execution context -->  how javascript runs the file
+
+when js file runs, global execution context is always created
+// {} -> global exec context  and is refered by variable: this
+
+Function or functional execution context 
+
+// eval is also there
+
+{}-> runs in two phase
+1. memory creation phase / memory phase / creation phase  ===> memory is allocated 
+2. execution phase
+
+//!!!!!!!!!!!!!!!!CODE!!!!!!!!!!!!!!!!!!!1
+let val1 = 10;
+let val2 = 20;
+function addNums(num1, num2) {
+    let total = num1 + num2;
+    return total;
+}
+let result1 = addNums(val1, val2);
+let result2 = addNums(10, 2);
+
+To run the above CODE
+1. Golbal execution / Global enviornment -> allocated in this
+2. Memory phase 
+ val1 -> undefined
+ val2 -> undefined
+ addNums -> defination --> means whateven is inside function
+ result1 -> undefined
+ result2 -> undefined
+
+3. Execution phase
+    val1 <- 10
+    val2 <- 20
+    // noting for function as it is done in defination so it will move to result1
+    addNums ---> creates it's own executional contest and this will happen when addNums is called from result1
+        1. new variable envirnment + execution thread is created
+        2. memory creation phase
+        val1 -> undefined
+        val2 -> undefined
+        total -> undefined
+        3. Execution phase
+        num1 -> 10
+        num2 -> 20
+        total -> 30
+        now total is returned to global executional context
+        //After this execution phase is completed, the execution thread and env context is deleted
+    result1 = 30
+        addNums 
+        1. new variable env + execution thread created
+        2. memory phase 
+           val1 = undefined
+           val2 = undefined
+           total = undefined
+        3. execution phase
+        num1 -> 10
+        num2 -> 2
+        total -> 12
+        now total2 is returned to global execution scope
+        //exec thread and new env is deleted
+    result2 = 12
+    //
+
+The working of the JavaScript works on three phases:
+1. Global Execution Context
+2. Memory phase / Creation phase
+3. Execution phase
+
+🔵Phase 1: Global Execution Context
+The value of `this` keyword is set to Global Execution Context (which is an empty Object in NODE environment, & window object in browser environment)
+
+🔵Phase 2: Memory phase
+During this phase, JS engine scans the code and assigns the initial values for the variables , functions, etc.. For variables they are 'undefined' and for functions they are set to their function definition
+
+🔵Phase 3: Execution phase
+After the creation phase completed, the execution phase begins where actual values of the variables are set. And when the functions are called it creates a new 'Function Execution' context which consists of two phases (they works same as explained above but only for the particular function scope):
+1. Memory phase 
+2. Execution phase 
+📝The return value of the 'Function Execution' context is passed to the Global Execution Context   
+
+
+//!!!!!!!!!!!!!!!!!!!CALL STACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+LIFO execution
